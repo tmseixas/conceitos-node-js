@@ -23,11 +23,6 @@ app.post("/repositories", (request, response) => {
     url,
     techs,
     likes: 0
-
-    // title: "Umbriel",
-    // url: "https://github.com/Rocketseat/umbriel",
-    // techs: ["Node","Express", "TypeScript"],
-    // likes: 0
   };
 
   repositories.push(repository);
@@ -56,14 +51,16 @@ app.put("/repositories/:id", (request, response) => {
 app.delete("/repositories/:id", (request, response) => {
   const  { id } = request.params;
   
-  const repository = repositories.find(repository => repository.id === id );
+  const repository = repositories.filter(repository => repository.id !== id );
   
   
   
   if (!repository) {
+    console.log(`404: ${id}`);
     return response.status(400).send();
   }
-
+  
+  console.log(`204: ${repository}`);
   repositories.splice(repository);
   
   return response.status(204).send();
